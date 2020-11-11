@@ -165,3 +165,6 @@ CONFIG_RAID5=n
 
 # Build with IDXD support
 CONFIG_IDXD=n
+
+# Build with Hyperwarp support
+CONFIG_HYPERWARP=n

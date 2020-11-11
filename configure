@@ -432,6 +432,12 @@ for i in "$@"; do
 		--without-idxd)
 			CONFIG[IDXD]=n
 			;;
+		--with-hyperwarp)
+			CONFIG[HYPERWARP]=y
+			;;
+		--without-hyperwarp)
+			CONFIG[HYPERWARP]=n
+			;;
 		--)
 			break
 			;;
@@ -774,6 +780,16 @@ if [[ "${CONFIG[FUSE]}" = "y" ]]; then
 	if [[ ! -d /usr/include/fuse3 ]] && [[ ! -d /usr/local/include/fuse3 ]]; then
 		echo "--with-fuse requires libfuse3."
 		echo "Please install then re-run this script."
+		exit 1
+	fi
+fi
+
+if [[ "${CONFIG[HYPERWARP]}" = "y" ]]; then
+	if ! echo -e '#include <hyperwarp/metadata.pb-c.h>\n#include <hyperwarp/metadata.h>\n' \
+		'int main(void) { return 0; }\n' \
+		| ${BUILD_CMD[@]} -lhyperwarp-metadata-model -lhyperwarp-metadata - 2>/dev/null; then
+		echo --with-hyperwarp requires libhyperwarp-metadata and libhyperwarp-metadata-model.
+		echo Please install then re-run this script.
 		exit 1
 	fi
 fi

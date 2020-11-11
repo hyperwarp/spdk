@@ -1150,3 +1150,27 @@ def bdev_nvme_apply_firmware(client, bdev_name, filename):
         'bdev_name': bdev_name,
     }
     return client.call('bdev_nvme_apply_firmware', params)
+
+def bdev_hyperwarp_create(client, name, uuid=None):
+    """Construct a hyperwarp block device.
+
+    Args:
+        name: name of block device
+        uuid: UUID of block device (optional)
+
+    Returns:
+        Name of created block device.
+    """
+    params = {'name': name}
+    if uuid:
+        params['uuid'] = uuid
+    return client.call('bdev_hyperwarp_create', params)
+
+def bdev_hyperwarp_delete(client, name):
+    """Remove hyperwarp bdev from the system.
+
+    Args:
+        name: name of hyperwarp bdev to delete
+    """
+    params = {'name': name}
+    return client.call('bdev_hyperwarp_delete', params)

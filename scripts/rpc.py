@@ -2577,6 +2577,27 @@ Format: 'user:u1 secret:s1 muser:mu1 msecret:ms1,user:u2 secret:s2 muser:mu2 mse
     p.add_argument('-i', '--impl', help='Socket implementation name, e.g. posix', required=True)
     p.set_defaults(func=sock_set_default_impl)
 
+    def bdev_hyperwarp_create(args):
+        print_json(rpc.bdev.bdev_hyperwarp_create(args.client,
+                                             name=args.name,
+                                             uuid=args.uuid))
+
+    p = subparsers.add_parser('bdev_hyperwarp_create', aliases=[],
+                              help='Add a bdev with hyperwarp backend')
+    p.add_argument('name', help='Block device name')
+    p.add_argument('-u', '--uuid', help='UUID of the bdev')
+    p.set_defaults(func=bdev_hyperwarp_create)
+
+    def bdev_hyperwarp_delete(args):
+        rpc.bdev.bdev_hyperwarp_delete(args.client,
+                                  name=args.name)
+
+    p = subparsers.add_parser('bdev_hyperwarp_delete', aliases=[],
+                              help='Delete a hyperwarp bdev')
+    p.add_argument('name', help='hyperwarp bdev name')
+    p.set_defaults(func=bdev_hyperwarp_delete)
+
+
     def check_called_name(name):
         if name in deprecated_aliases:
             print("{} is deprecated, use {} instead.".format(name, deprecated_aliases[name]), file=sys.stderr)

@@ -104,6 +104,11 @@ ifeq ($(CONFIG_IDXD),y)
 ACCEL_MODULES_LIST += accel_idxd idxd
 endif
 
+ifeq ($(CONFIG_HYPERWARP),y)
+BLOCKDEV_MODULES_LIST += bdev_hyperwarp
+SYS_LIBS += -lhyperwarp-metadata-model -lhyperwarp-metadata
+endif
+
 EVENT_BDEV_SUBSYSTEM = event_bdev event_accel event_vmd event_sock
 
 ALL_MODULES_LIST = $(BLOCKDEV_MODULES_LIST) $(ACCEL_MODULES_LIST) $(SOCK_MODULES_LIST)
